@@ -5,6 +5,7 @@ lua54 'yes'
 game 'gta5'
 
 client_scripts {
+	'client/modules/events.lua',
 	'client/modules/functions.lua',
 	'client/main.lua',
 }
