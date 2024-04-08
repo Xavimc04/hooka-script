@@ -11,3 +11,7 @@ RegisterNetEvent('hooka:createObjectOnHand', function()
 
     TaskPlayAnim(GetPlayerPed(-1), "anim@heists@box_carry@", "idle", 5.0, -1, -1, 50, 0, false, false, false)
 end)
+
+RegisterNetEvent('hooka:syncLocations', function(locations)
+    Hookas = locations
+end)

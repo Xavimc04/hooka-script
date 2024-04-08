@@ -1,5 +1,5 @@
 ESX = exports['es_extended']:getSharedObject(); 
-Hookas = []
+Hookas = {}
 
 RegisterNetEvent('hooka:createHookaLocation', function(location)
     local src = source
@@ -13,4 +13,14 @@ RegisterNetEvent('hooka:createHookaLocation', function(location)
     if not Player then 
         return 
     end
+
+    table.insert(Hookas, {
+        owner = {
+            id = Player.identifier,
+            name = Player.name
+        },
+        location = location
+    })
+
+    TriggerClientEvent('hooka:syncLocations', -1, Hookas)
 end)
