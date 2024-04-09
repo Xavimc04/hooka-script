@@ -45,27 +45,51 @@ function screenText(text)
     DrawSubtitleTimed(1, 1)
 end
 
+function hookaText(coords, text, size, font)
+	coords = vector3(coords.x, coords.y, coords.z)
+
+	local camCoords = GetGameplayCamCoords()
+	local distance = #(coords - camCoords)
+
+	if not size then size = 1 end
+	if not font then font = 0 end
+
+	local scale = (size / distance) * 2
+	local fov = (1 / GetGameplayCamFov()) * 100
+	scale = scale * fov
+
+	SetTextScale(0.0 * scale, 0.40 * scale)
+	SetTextFont(font)
+	SetTextColour(255, 255, 255, 255)
+	SetTextDropshadow(0, 0, 0, 0, 255)
+	SetTextDropShadow()
+	SetTextOutline()
+	SetTextCentre(true)
+
+	SetDrawOrigin(coords, 0)
+	BeginTextCommandDisplayText('STRING')
+	AddTextComponentSubstringPlayerName(text)
+	EndTextCommandDisplayText(0.0, 0.0)
+	ClearDrawOrigin()
+end
+
 -- @ Hose
 function attatchHose() 
-    local hash = GetHashKey('v_corp_boxpaprfd')
-	local ped = PlayerPedId()
+    local playerPed  = PlayerPedId()
+	local coords     = GetEntityCoords(playerPed)
+	local boneIndex  = GetPedBoneIndex(playerPed, 12844)
+	local boneIndex2 = GetPedBoneIndex(playerPed, 24818)
+	local model = GetHashKey('v_corp_lngestoolfd')
+	
+    RequestModel(model)
 
-    RequestModel(hash)
+	while not HasModelLoaded(model) do
+		Wait(100)
+	end
 
-    while not HasModelLoaded(hash) do
-        Wait(100)
-    end
+	local obj = CreateObject(model,  coords.x + 0.5, coords.y + 0.1, coords.z + 0.4, true, false, true)
 
-	local obj = CreateObject(hash,  GetEntityCoords(PlayerPedId()),  true,  true, true)
-
-    RequestNamedPtfxAsset("core")
-    
-    while not HasNamedPtfxAssetLoaded('core') do
-        Wait(0)
-    end
-    
-    UseParticleFxAsset("core")
-    StartNetworkedParticleFxLoopedOnEntity("ent_anim_cig_smoke",obj,0,0,0.1, 0,0,0, 3.0, 0,0,0)
+	AttachEntityToEntity(obj, playerPed, boneIndex2, -0.43, 0.68, 0.18, 0.0, 90.0, 90.0, true, true, false, true, 1, true)	
 
     local anim = "amb@world_human_clipboard@male@base"
     
@@ -75,11 +99,9 @@ function attatchHose()
         Wait(0)
     end
 	
-    local boneIndex = GetPedBoneIndex(ped, 0x67F2)
+    local boneIndex = GetPedBoneIndex(playerPed, 0x67F2)
 
-    TaskPlayAnim(ped, anim, "base",2.0, 2.0, -1, 49, 0, false, false, false)
-
-	AttachEntityToEntity(obj, ped,  boneIndex, 0.15,-0.10,0.0,  -130.0, 310.0, 0.0,  true, true, false, true, 1, true)
+    TaskPlayAnim(playerPed, anim, "base", 2.0, 2.0, -1, 49, 0, false, false, false)
 
     return obj
 end

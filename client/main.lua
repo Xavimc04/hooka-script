@@ -6,6 +6,7 @@ HoseObject = nil
 CreateThread(function() 
     while true do
         local sleep = 1000
+        local player = PlayerPedId()
         
         if HookaObject then 
             sleep = 0
@@ -18,7 +19,7 @@ CreateThread(function()
                 HookaObject = nil
     
                 -- @ Cancel animation
-                ClearPedTasks(GetPlayerPed(-1))
+                ClearPedTasks(player)
             end
     
             -- @ On press E
@@ -29,7 +30,7 @@ CreateThread(function()
                 HookaObject = nil
     
                 -- @ Cancel animation
-                ClearPedTasks(GetPlayerPed(-1))
+                ClearPedTasks(player)
             end
 
             -- @ Screen text
@@ -37,21 +38,28 @@ CreateThread(function()
         end
 
         for k, v in pairs(Hookas) do
-            local distance = #(GetEntityCoords(PlayerPedId()) - v.location)
+            local distance = #(GetEntityCoords(player) - v.location)
 
             if distance < 2.0 then
                 sleep = 0
 
+                hookaText(v.location, "Hooka de ~b~" .. v.owner.name .. "\n~o~" .. v.charge .. "%", 0.9)
+
                 -- @ Screen text
                 if HoseObject then 
-                    screenText("Presiona [X] para cancelar")
+                    screenText("Presiona [X] para cancelar\nPresiona [E] para fumar")
                 else 
-                    screenText("Hooka de ~b~" .. v.owner.name .. "~w~\nPresiona [E] para fumar")
+                    screenText("Presiona [E] para fumar")
                 end
 
-                -- @ On press E
-                if IsControlJustPressed(0, 38) and not HoseObject then
-                    HoseObject = attatchHose()
+                -- @ On press E - Smoke 
+                if IsControlJustPressed(0, 38) and HoseObject then
+                    TriggerServerEvent("eff_smokes", v.id, PedToNet(player))
+                end
+
+                -- @ On press E - Attach hose
+                if IsControlJustPressed(0, 38) and not HoseObject then 
+                    TriggerServerEvent('hooka:attachHose', v.id)
                 end
 
                 -- @ On press X
@@ -62,7 +70,7 @@ CreateThread(function()
                     HoseObject = nil
 
                     -- @ Cancel animation
-                    ClearPedTasks(GetPlayerPed(-1))
+                    ClearPedTasks(player)
                 end
             else 
                 if HoseObject then
@@ -72,7 +80,7 @@ CreateThread(function()
                     HoseObject = nil
 
                     -- @ Cancel animation
-                    ClearPedTasks(GetPlayerPed(-1))
+                    ClearPedTasks(player)
                 end
             end
         end
