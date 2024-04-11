@@ -49,7 +49,7 @@ CreateThread(function()
                 if HoseObject then 
                     screenText("Presiona [X] para cancelar\nPresiona [E] para fumar")
                 else 
-                    screenText("Presiona [E] para fumar")
+                    screenText("Presiona [E] para fumar\nPresiona [G] para recoger")
                 end
 
                 -- @ On press E - Smoke 
@@ -69,6 +69,17 @@ CreateThread(function()
                 -- @ On press X
                 if IsControlJustPressed(0, 73) and HoseObject then
                     deleteHoseObject(HoseObject, v.id)
+                end
+
+                -- @ On press G
+                if IsControlJustPressed(0, 47) and not HoseObject then 
+                    if v.isSomeoneSmoking then
+                        ESX.ShowNotification("Alguien está fumando, no puedes retirar la hooka...")
+                        
+                        return
+                    end 
+
+                    TriggerServerEvent("hooka:deleteHooka", v.id)
                 end
             else 
                 if HoseObject then

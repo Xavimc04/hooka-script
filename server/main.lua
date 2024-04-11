@@ -105,3 +105,35 @@ RegisterNetEvent('hooka:dettatchHose', function(hooka)
         end
     end
 end)
+
+RegisterNetEvent('hooka:deleteHooka', function(hooka)
+    local src = source
+
+    if not src then 
+        return 
+    end
+
+    local Player = ESX.GetPlayerFromId(src)
+
+    if not Player then 
+        return 
+    end
+
+    if Hookas[hooka] then
+        if Hookas[hooka].isSomeoneSmoking then 
+            Player.showNotification("Alguien está fumando, no puedes retirar la hooka...")
+
+            return 
+        end
+
+        if Player.getJob().name == Config.AllowedJob or (Player.getGroup() ~= 'user' and Config.isAdminAllowed) or Hookas[hooka].isSomeoneSmoking == src then
+            Hookas[hooka] = false
+
+            print(json.encode(Hookas))
+
+            TriggerClientEvent('hooka:syncLocations', Hookas)
+        else
+            Player.showNotification("No puedes retirar la hooka")
+        end
+    end
+end)
