@@ -1,5 +1,8 @@
 fx_version 'cerulean'
 
+author "@ ElPatron"
+description "Hooka resource for FiveM customer"
+
 lua54 'yes'
 
 game 'gta5'
