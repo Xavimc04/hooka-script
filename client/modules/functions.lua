@@ -106,6 +106,15 @@ function attatchHose()
     return obj
 end
 
-function deleteHoseObject(obj)
+function deleteHoseObject(obj, hookaId)
     DeleteEntity(obj)
+
+    -- @ Restore hose variables
+    HoseObject = nil
+
+    -- @ Cancel animation
+    ClearPedTasks(player)
+
+    -- @ Global remove smoking state
+    TriggerServerEvent("hooka:dettatchHose", hookaId)
 end

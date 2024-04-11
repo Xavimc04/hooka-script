@@ -43,7 +43,7 @@ CreateThread(function()
             if distance < 2.0 then
                 sleep = 0
 
-                hookaText(v.location, "Hooka de ~b~" .. v.owner.name .. "\n~o~" .. v.charge .. "%", 0.9)
+                hookaText(v.location, "[~o~" .. v.charge .. "%~w~]\nHooka de ~b~" .. v.owner.name .. "\n~w~Tabaco: ~r~Sin tabaco", 0.9)
 
                 -- @ Screen text
                 if HoseObject then 
@@ -54,7 +54,11 @@ CreateThread(function()
 
                 -- @ On press E - Smoke 
                 if IsControlJustPressed(0, 38) and HoseObject then
-                    TriggerServerEvent("eff_smokes", v.id, PedToNet(player))
+                    if not v.tobacco then 
+                        ESX.ShowNotification("Esta hooka no tiene tabaco...")
+                    else 
+                        TriggerServerEvent("eff_smokes", v.id, PedToNet(player))
+                    end
                 end
 
                 -- @ On press E - Attach hose
@@ -64,23 +68,11 @@ CreateThread(function()
 
                 -- @ On press X
                 if IsControlJustPressed(0, 73) and HoseObject then
-                    deleteHoseObject(HoseObject)
-
-                    -- @ Restore hose variables
-                    HoseObject = nil
-
-                    -- @ Cancel animation
-                    ClearPedTasks(player)
+                    deleteHoseObject(HoseObject, v.id)
                 end
             else 
                 if HoseObject then
-                    deleteHoseObject(HoseObject)
-
-                    -- @ Restore hose variables
-                    HoseObject = nil
-
-                    -- @ Cancel animation
-                    ClearPedTasks(player)
+                    deleteHoseObject(HoseObject, v.id)
                 end
             end
         end

@@ -22,6 +22,7 @@ RegisterNetEvent('hooka:createHookaLocation', function(location)
         },
         charge = 100,
         location = location,
+        tobacco = false,
         isSomeoneSmoking = false
     }
 
@@ -29,12 +30,36 @@ RegisterNetEvent('hooka:createHookaLocation', function(location)
 end)
 
 RegisterNetEvent("eff_smokes", function(hooka, entity)
-    -- @ Remove charge on smoke
-    if Hookas[hooka] then 
-        Hookas[hooka].charge = Hookas[hooka].charge - 2
+    local src = source 
+
+    if not src then 
+        return 
     end
 
-	TriggerClientEvent("c_eff_smokes", -1, entity, Hookas)
+    local Player = ESX.GetPlayerFromId(src)
+
+    if not Player then 
+        return
+    end
+
+    if Hookas[hooka] then 
+        -- @ Validate if is player smoking
+        if Hookas[hooka].isSomeoneSmoking then 
+            if Hookas[hooka].isSomeoneSmoking ~= src then 
+                return Player.showNotification("Parece que hay otra persona fumando...")
+            end
+        end
+
+        -- @ Validate if has tobacco
+        if not Hookas[hooka].tobacco then 
+            return Player.showNotification("Esta hooka no tiene tabaco...")
+        end
+       
+        -- @ Remove charge on smoke
+        Hookas[hooka].charge = Hookas[hooka].charge - 2
+        
+        TriggerClientEvent("c_eff_smokes", -1, entity, Hookas)
+    end
 end)
 
 RegisterNetEvent('hooka:attachHose', function(hooka)
@@ -59,4 +84,24 @@ RegisterNetEvent('hooka:attachHose', function(hooka)
     end
 
     TriggerClientEvent('hooka:clientHoseAttatch', src)
+end)
+
+RegisterNetEvent('hooka:dettatchHose', function(hooka)
+    local src = source
+
+    if not src then 
+        return 
+    end
+
+    local Player = ESX.GetPlayerFromId(src)
+
+    if not Player then 
+        return 
+    end
+
+    if Hookas[hooka] then 
+        if Hookas[hooka].isSomeoneSmoking and Hookas[hooka].isSomeoneSmoking == src then 
+            Hookas[hooka].isSomeoneSmoking = false
+        end
+    end
 end)
