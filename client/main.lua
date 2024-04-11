@@ -38,6 +38,10 @@ CreateThread(function()
         end
 
         for k, v in pairs(Hookas) do
+            if not v then 
+                return 
+            end
+
             local distance = #(GetEntityCoords(player) - v.location)
 
             if distance < 2.0 then
