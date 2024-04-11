@@ -43,8 +43,10 @@ CreateThread(function()
     
                 if distance < 2.0 then
                     sleep = 0
+                    
+                    local tobacco = v.tobacco and v.tobacco.label or "~r~Sin tabaco"
     
-                    hookaText(v.location, "[~o~" .. v.charge .. "%~w~]\nHooka de ~b~" .. v.owner.name .. "\n~w~Tabaco: ~r~Sin tabaco", 0.9)
+                    hookaText(v.location, "[~o~" .. v.charge .. "%~w~]\nHooka de ~b~" .. v.owner.name .. "\n~w~Tabaco: " .. tobacco, 0.9)
     
                     -- @ Screen text
                     if HoseObject then 
