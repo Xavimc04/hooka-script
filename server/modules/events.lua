@@ -135,3 +135,19 @@ RegisterNetEvent('hooka:deleteHooka', function(hooka)
         end
     end
 end)
+
+RegisterNetEvent('hooka:useTobacco', function(tobaccoIndex)
+    local src = source
+
+    if not src then 
+        return 
+    end
+
+    local tobacco = Config.Tobacco[tobaccoIndex]
+
+    if not tobacco then 
+        return 
+    end
+
+    setHookaTobacco(src, tobacco)
+end)

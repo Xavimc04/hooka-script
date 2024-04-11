@@ -53,13 +53,13 @@ CreateThread(function()
                     
                     local tobacco = v.tobacco and v.tobacco.label or "~r~Sin tabaco"
     
-                    hookaText(v.location, "[~o~" .. v.charge .. "%~w~]\nHooka de ~b~" .. v.owner.name .. "\n~w~Tabaco: " .. tobacco, 0.9)
+                    hookaText(v.location, "[~o~" .. v.charge .. "%~w~]\nHooka de ~b~" .. v.owner.name .. "\n~w~Tabaco: ~g~" .. tobacco, 0.9)
     
                     -- @ Screen text
                     if HoseObject then 
                         screenText("Presiona [X] para cancelar\nPresiona [E] para fumar")
                     else 
-                        screenText("Presiona [E] para fumar\nPresiona [G] para recoger")
+                        screenText("Presiona [E] para fumar\nPresiona [G] para abrir el menu")
                     end
     
                     -- @ On press E - Smoke 
@@ -87,15 +87,7 @@ CreateThread(function()
     
                     -- @ On press G
                     if IsControlJustPressed(0, 47) and not HoseObject then 
-                        if v.isSomeoneSmoking then
-                            ESX.ShowNotification("Alguien está fumando, no puedes retirar la hooka...")
-                            
-                            return
-                        end 
-    
-                        deleteHookaObject(v.entity)
-    
-                        TriggerServerEvent("hooka:deleteHooka", v.id)
+                        interact()
                     end
                 else 
                     if HoseObject then

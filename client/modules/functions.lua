@@ -156,3 +156,45 @@ function unDrugPlayer()
 
     SetPedMotionBlur(playerPed, false)
 end
+
+-- @ Menu 
+function interact(hooka) 
+    local Elements = { 
+        { label = "Recoger", value = "pickup" },
+        { label = "Cancelar", value = "cancel" }
+    }
+
+    for i, v in pairs(Config.Tobacco) do 
+        table.insert(Elements, { label = v.label, value = v.item, tobaccoIndex = i, name = "tobacco" })
+    end
+
+    ESX.UI.Menu.Open("default", GetCurrentResourceName(), "hooka_interaction", {
+        title = "Hooka",
+        align    = 'bottom-right',
+        elements = Elements
+    }, function(data, menu)
+        -- @ Close menu
+        if data.current.value == "cancel" then 
+            menu.close()
+        end
+
+        if data.current.name and data.current.name == 'tobacco' then  
+            TriggerServerEvent("hooka:useTobacco", data.current.tobaccoIndex)
+        end
+
+        -- @ Pick up hooka
+        if data.current.value == "pickup" then 
+            if hooka.isSomeoneSmoking then
+                ESX.ShowNotification("Alguien está fumando, no puedes retirar la hooka...")
+                
+                return
+            end 
+
+            deleteHookaObject(hooka.entity)
+
+            TriggerServerEvent("hooka:deleteHooka", hooka.id)
+        end
+    end, function(data, menu)
+        menu.close()
+    end)
+end
