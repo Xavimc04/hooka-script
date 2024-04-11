@@ -87,7 +87,7 @@ CreateThread(function()
     
                     -- @ On press G
                     if IsControlJustPressed(0, 47) and not HoseObject then 
-                        interact()
+                        interact(v)
                     end
                 else 
                     if HoseObject then
