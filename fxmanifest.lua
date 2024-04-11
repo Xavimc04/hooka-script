@@ -5,9 +5,9 @@ lua54 'yes'
 game 'gta5'
 
 client_scripts {
-	'client/modules/events.lua',
-	'client/modules/functions.lua',
 	'client/main.lua',
+	'client/modules/functions.lua',
+	'client/modules/events.lua',
 }
  
 shared_scripts {
@@ -16,7 +16,7 @@ shared_scripts {
 }
  
 server_scripts { 
-	'server/modules/commands.lua', 
+	'server/main.lua',
 	'server/modules/events.lua', 
-	'server/main.lua'
+	'server/modules/commands.lua', 
 }
