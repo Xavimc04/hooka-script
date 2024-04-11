@@ -127,6 +127,8 @@ RegisterNetEvent('hooka:deleteHooka', function(hooka)
         if Player.getJob().name == Config.AllowedJob or (Player.getGroup() ~= 'user' and Config.isAdminAllowed) or Hookas[hooka].isSomeoneSmoking == src then
             Hookas[hooka] = false
 
+            Player.addInventoryItem(Config.Item, 1)
+
             TriggerClientEvent('hooka:syncLocations', -1, Hookas)
         else
             Player.showNotification("No puedes retirar la hooka")

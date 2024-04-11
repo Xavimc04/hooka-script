@@ -14,8 +14,6 @@ end)
 
 RegisterNetEvent('hooka:syncLocations', function(locations)
     Hookas = locations
-
-    print(json.encode(Hookas))
 end)
 
 p_smoke_location = {
