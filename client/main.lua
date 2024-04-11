@@ -79,6 +79,8 @@ CreateThread(function()
                         return
                     end 
 
+                    deleteHookaObject(v.entity)
+
                     TriggerServerEvent("hooka:deleteHooka", v.id)
                 end
             else 

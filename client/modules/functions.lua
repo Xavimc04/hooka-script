@@ -23,6 +23,8 @@ function deleteHookaObject(obj)
 end
 
 function currentHookaToFloor(currentHooka) 
+    awaitProgress()
+
     deleteHookaObject(currentHooka)
 
     local obj = createHookaObject()
@@ -32,9 +34,13 @@ function currentHookaToFloor(currentHooka)
     SetEntityCoords(obj, floorCoords)
     FreezeEntityPosition(obj, true)
     
-    TriggerServerEvent('hooka:createHookaLocation', playerCoords)
+    TriggerServerEvent('hooka:createHookaLocation', playerCoords, obj)
 
     return obj
+end
+
+function deleteNearHookaObject()
+    local playerCoords = GetEntityCoords(PlayerPedId())
 end
 
 -- @ Screen text
@@ -117,4 +123,20 @@ function deleteHoseObject(obj, hookaId)
 
     -- @ Global remove smoking state
     TriggerServerEvent("hooka:dettatchHose", hookaId)
+end
+
+-- @ Display circle
+function awaitProgress() 
+    if lib ~= nil then
+        lib:progressCircle({
+            duration = 2000,
+            position = 'middle',
+            useWhileDead = false,
+            canCancel = false,
+            disable = {
+                car = true,
+                move = true
+            },
+        }) 
+    end
 end

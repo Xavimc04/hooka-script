@@ -1,7 +1,7 @@
 ESX = exports['es_extended']:getSharedObject(); 
 Hookas = {}
 
-RegisterNetEvent('hooka:createHookaLocation', function(location)
+RegisterNetEvent('hooka:createHookaLocation', function(location, entity)
     local src = source
 
     if not src then 
@@ -23,7 +23,8 @@ RegisterNetEvent('hooka:createHookaLocation', function(location)
         charge = 100,
         location = location,
         tobacco = false,
-        isSomeoneSmoking = false
+        isSomeoneSmoking = false,
+        entity = entity
     }
 
     TriggerClientEvent('hooka:syncLocations', -1, Hookas)
@@ -129,9 +130,7 @@ RegisterNetEvent('hooka:deleteHooka', function(hooka)
         if Player.getJob().name == Config.AllowedJob or (Player.getGroup() ~= 'user' and Config.isAdminAllowed) or Hookas[hooka].isSomeoneSmoking == src then
             Hookas[hooka] = false
 
-            print(json.encode(Hookas))
-
-            TriggerClientEvent('hooka:syncLocations', Hookas)
+            TriggerClientEvent('hooka:syncLocations', -1, Hookas)
         else
             Player.showNotification("No puedes retirar la hooka")
         end

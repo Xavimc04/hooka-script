@@ -10,7 +10,10 @@ client_scripts {
 	'client/main.lua',
 }
  
-shared_scripts { 'config.lua' }
+shared_scripts {
+	'@ox_lib/init.lua',
+	'config.lua'
+}
  
 server_scripts { 
 	'server/modules/commands.lua', 
