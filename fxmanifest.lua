@@ -17,5 +17,6 @@ shared_scripts {
  
 server_scripts { 
 	'server/modules/commands.lua', 
+	'server/modules/events.lua', 
 	'server/main.lua'
 }

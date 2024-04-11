@@ -20,6 +20,8 @@ end
 
 function deleteHookaObject(obj)
     DeleteEntity(obj)
+
+    HookaObject = nil
 end
 
 function currentHookaToFloor(currentHooka) 
@@ -37,10 +39,6 @@ function currentHookaToFloor(currentHooka)
     TriggerServerEvent('hooka:createHookaLocation', playerCoords, obj)
 
     return obj
-end
-
-function deleteNearHookaObject()
-    local playerCoords = GetEntityCoords(PlayerPedId())
 end
 
 -- @ Screen text

@@ -38,58 +38,56 @@ CreateThread(function()
         end
 
         for k, v in pairs(Hookas) do
-            if not v then 
-                return 
-            end
-
-            local distance = #(GetEntityCoords(player) - v.location)
-
-            if distance < 2.0 then
-                sleep = 0
-
-                hookaText(v.location, "[~o~" .. v.charge .. "%~w~]\nHooka de ~b~" .. v.owner.name .. "\n~w~Tabaco: ~r~Sin tabaco", 0.9)
-
-                -- @ Screen text
-                if HoseObject then 
-                    screenText("Presiona [X] para cancelar\nPresiona [E] para fumar")
-                else 
-                    screenText("Presiona [E] para fumar\nPresiona [G] para recoger")
-                end
-
-                -- @ On press E - Smoke 
-                if IsControlJustPressed(0, 38) and HoseObject then
-                    if not v.tobacco then 
-                        ESX.ShowNotification("Esta hooka no tiene tabaco...")
+            if v then  
+                local distance = #(GetEntityCoords(player) - v.location)
+    
+                if distance < 2.0 then
+                    sleep = 0
+    
+                    hookaText(v.location, "[~o~" .. v.charge .. "%~w~]\nHooka de ~b~" .. v.owner.name .. "\n~w~Tabaco: ~r~Sin tabaco", 0.9)
+    
+                    -- @ Screen text
+                    if HoseObject then 
+                        screenText("Presiona [X] para cancelar\nPresiona [E] para fumar")
                     else 
-                        TriggerServerEvent("eff_smokes", v.id, PedToNet(player))
+                        screenText("Presiona [E] para fumar\nPresiona [G] para recoger")
                     end
-                end
-
-                -- @ On press E - Attach hose
-                if IsControlJustPressed(0, 38) and not HoseObject then 
-                    TriggerServerEvent('hooka:attachHose', v.id)
-                end
-
-                -- @ On press X
-                if IsControlJustPressed(0, 73) and HoseObject then
-                    deleteHoseObject(HoseObject, v.id)
-                end
-
-                -- @ On press G
-                if IsControlJustPressed(0, 47) and not HoseObject then 
-                    if v.isSomeoneSmoking then
-                        ESX.ShowNotification("Alguien está fumando, no puedes retirar la hooka...")
-                        
-                        return
-                    end 
-
-                    deleteHookaObject(v.entity)
-
-                    TriggerServerEvent("hooka:deleteHooka", v.id)
-                end
-            else 
-                if HoseObject then
-                    deleteHoseObject(HoseObject, v.id)
+    
+                    -- @ On press E - Smoke 
+                    if IsControlJustPressed(0, 38) and HoseObject then
+                        if not v.tobacco then 
+                            ESX.ShowNotification("Esta hooka no tiene tabaco...")
+                        else 
+                            TriggerServerEvent("eff_smokes", v.id, PedToNet(player))
+                        end
+                    end
+    
+                    -- @ On press E - Attach hose
+                    if IsControlJustPressed(0, 38) and not HoseObject then 
+                        TriggerServerEvent('hooka:attachHose', v.id)
+                    end
+    
+                    -- @ On press X
+                    if IsControlJustPressed(0, 73) and HoseObject then
+                        deleteHoseObject(HoseObject, v.id)
+                    end
+    
+                    -- @ On press G
+                    if IsControlJustPressed(0, 47) and not HoseObject then 
+                        if v.isSomeoneSmoking then
+                            ESX.ShowNotification("Alguien está fumando, no puedes retirar la hooka...")
+                            
+                            return
+                        end 
+    
+                        deleteHookaObject(v.entity)
+    
+                        TriggerServerEvent("hooka:deleteHooka", v.id)
+                    end
+                else 
+                    if HoseObject then
+                        deleteHoseObject(HoseObject, v.id)
+                    end
                 end
             end
         end

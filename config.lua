@@ -1,4 +1,5 @@
 Config = {
+    Item = 'hookah',
     AllowedJob = 'police', 
     isAdminAllowed = true,
     Tobacco = {
