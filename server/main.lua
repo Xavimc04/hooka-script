@@ -44,6 +44,12 @@ RegisterNetEvent('hooka:attachHose', function(hooka)
         return 
     end
 
+    local Player = ESX.GetPlayerFromId(src)
+
+    if not Player then 
+        return 
+    end
+
     if Hookas[hooka] then 
         if Hookas[hooka].isSomeoneSmoking then 
             return Player.showNotification("Alguien está fumando en esta hooka") 
