@@ -3,6 +3,13 @@ Hookas = {}
 HookaObject = nil
 HoseObject = nil
 
+p_smoke_location = {
+	20279,
+}
+
+p_smoke_particle = "exp_grd_bzgas_smoke"
+p_smoke_particle_asset = "core" 
+
 CreateThread(function() 
     while true do
         local sleep = 1000
@@ -59,8 +66,12 @@ CreateThread(function()
                     if IsControlJustPressed(0, 38) and HoseObject then
                         if not v.tobacco then 
                             ESX.ShowNotification("Esta hooka no tiene tabaco...")
-                        else 
+                        else   
                             TriggerServerEvent("eff_smokes", v.id, PedToNet(player))
+
+                            if v.tobacco.hasDrugEffect ~= nil and v.tobacco.hasDrugEffect then
+                                drugEffect()
+                            end
                         end
                     end
     

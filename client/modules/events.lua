@@ -16,13 +16,6 @@ RegisterNetEvent('hooka:syncLocations', function(locations)
     Hookas = locations
 end)
 
-p_smoke_location = {
-	20279,
-}
-
-p_smoke_particle = "exp_grd_bzgas_smoke"
-p_smoke_particle_asset = "core" 
-
 RegisterNetEvent("c_eff_smokes", function(c_ped, serverHookas)
     Hookas = serverHookas
 
@@ -69,4 +62,8 @@ end)
 
 RegisterNetEvent('hooka:clientHoseAttatch', function()
     HoseObject = attatchHose()
+end)
+
+RegisterNetEvent('hooka:unDrug', function()
+    unDrugPlayer()
 end)

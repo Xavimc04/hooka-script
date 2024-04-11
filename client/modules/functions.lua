@@ -138,3 +138,21 @@ function awaitProgress()
         }) 
     end
 end
+
+-- @ Drug effect
+function drugEffect() 
+    local playerPed = PlayerPedId()
+
+    SetTimecycleModifier("spectator5")
+    SetPedMotionBlur(playerPed, true)
+    SetPedMovementClipset(playerPed, "move_m@hipster@a", true) 
+end
+
+function unDrugPlayer()
+    local playerPed = PlayerPedId()
+
+    ClearTimecycleModifier()
+    ResetScenarioTypesEnabled()
+
+    SetPedMotionBlur(playerPed, false)
+end
