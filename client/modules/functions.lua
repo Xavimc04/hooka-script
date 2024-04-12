@@ -25,15 +25,14 @@ function deleteHookaObject(obj)
 end
 
 function currentHookaToFloor(currentHooka)  
-    if lib:progressCircle({
+    if lib.progressCircle({
         duration = 2000,
-        position = 'middle',
+        position = 'bottom',
         useWhileDead = false,
-        canCancel = false,
+        canCancel = true,
         disable = {
             car = true,
-            move = true
-        },
+        }
     }) then
         deleteHookaObject(currentHooka)
     
@@ -172,15 +171,14 @@ function interact(hooka)
         end
 
         if data.current.name and data.current.name == 'tobacco' then  
-            if lib:progressCircle({
+            if lib.progressCircle({
                 duration = 2000,
-                position = 'middle',
+                position = 'bottom',
                 useWhileDead = false,
-                canCancel = false,
+                canCancel = true,
                 disable = {
                     car = true,
-                    move = true
-                },
+                }
             }) then
                 TriggerServerEvent("hooka:useTobacco", data.current.tobaccoIndex)
             end
