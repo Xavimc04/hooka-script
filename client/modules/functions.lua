@@ -188,7 +188,7 @@ function interact(hooka)
 
         -- @ Pick up hooka
         if data.current.value == "pickup" then 
-            if hooka.isSomeoneSmoking then
+            if hooka.isSomeoneSmoking ~= false then
                 ESX.ShowNotification("Alguien está fumando, no puedes retirar la hooka...")
                 
                 return

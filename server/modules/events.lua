@@ -99,6 +99,8 @@ RegisterNetEvent('hooka:dettatchHose', function(hooka)
 
     if Hookas[hooka] then 
         Hookas[hooka].isSomeoneSmoking = false
+
+        TriggerClientEvent('hooka:syncLocations', -1, Hookas)
     end
 end)
 
@@ -116,7 +118,7 @@ RegisterNetEvent('hooka:deleteHooka', function(hooka)
     end
 
     if Hookas[hooka] then
-        if Hookas[hooka].isSomeoneSmoking then 
+        if Hookas[hooka].isSomeoneSmoking ~= false then 
             Player.showNotification("Alguien está fumando, no puedes retirar la hooka...")
 
             return 
