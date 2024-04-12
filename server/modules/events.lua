@@ -98,9 +98,7 @@ RegisterNetEvent('hooka:dettatchHose', function(hooka)
     end
 
     if Hookas[hooka] then 
-        if Hookas[hooka].isSomeoneSmoking and Hookas[hooka].isSomeoneSmoking == src then 
-            Hookas[hooka].isSomeoneSmoking = false
-        end
+        Hookas[hooka].isSomeoneSmoking = false
     end
 end)
 

@@ -64,7 +64,7 @@ CreateThread(function()
     
                     -- @ On press E - Smoke 
                     if IsControlJustPressed(0, 38) and HoseObject then
-                        if not v.tobacco then 
+                        if not v.tobacco or v.charge <= 0 then 
                             ESX.ShowNotification("Esta hooka no tiene tabaco...")
                         else   
                             TriggerServerEvent("eff_smokes", v.id, PedToNet(player))

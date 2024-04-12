@@ -24,21 +24,30 @@ function deleteHookaObject(obj)
     HookaObject = nil
 end
 
-function currentHookaToFloor(currentHooka) 
-    awaitProgress()
-
-    deleteHookaObject(currentHooka)
-
-    local obj = createHookaObject()
-    local playerCoords = GetEntityCoords(PlayerPedId())
-    local floorCoords = vector3(playerCoords.x, playerCoords.y, playerCoords.z - 0.7)
-
-    SetEntityCoords(obj, floorCoords)
-    FreezeEntityPosition(obj, true)
+function currentHookaToFloor(currentHooka)  
+    if lib:progressCircle({
+        duration = 2000,
+        position = 'middle',
+        useWhileDead = false,
+        canCancel = false,
+        disable = {
+            car = true,
+            move = true
+        },
+    }) then
+        deleteHookaObject(currentHooka)
     
-    TriggerServerEvent('hooka:createHookaLocation', playerCoords, obj)
-
-    return obj
+        local obj = createHookaObject()
+        local playerCoords = GetEntityCoords(PlayerPedId())
+        local floorCoords = vector3(playerCoords.x, playerCoords.y, playerCoords.z - 0.7)
+    
+        SetEntityCoords(obj, floorCoords)
+        FreezeEntityPosition(obj, true)
+        
+        TriggerServerEvent('hooka:createHookaLocation', playerCoords, obj)
+    
+        return obj
+    end
 end
 
 -- @ Screen text
@@ -123,22 +132,6 @@ function deleteHoseObject(obj, hookaId)
     TriggerServerEvent("hooka:dettatchHose", hookaId)
 end
 
--- @ Display circle
-function awaitProgress() 
-    if lib ~= nil then
-        lib:progressCircle({
-            duration = 2000,
-            position = 'middle',
-            useWhileDead = false,
-            canCancel = false,
-            disable = {
-                car = true,
-                move = true
-            },
-        }) 
-    end
-end
-
 -- @ Drug effect
 function drugEffect() 
     local playerPed = PlayerPedId()
@@ -179,7 +172,18 @@ function interact(hooka)
         end
 
         if data.current.name and data.current.name == 'tobacco' then  
-            TriggerServerEvent("hooka:useTobacco", data.current.tobaccoIndex)
+            if lib:progressCircle({
+                duration = 2000,
+                position = 'middle',
+                useWhileDead = false,
+                canCancel = false,
+                disable = {
+                    car = true,
+                    move = true
+                },
+            }) then
+                TriggerServerEvent("hooka:useTobacco", data.current.tobaccoIndex)
+            end
         end
 
         -- @ Pick up hooka
